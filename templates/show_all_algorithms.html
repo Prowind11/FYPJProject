@@ -1,0 +1,80 @@
+{% extends "includes/base_template.html" %}
+{% block title %}Testing{% endblock %}
+
+{% block head %}
+<script>
+
+</script>
+{% endblock %}
+
+
+{% block body %}
+<div class="container mt-4">
+    <div class="card-columns">
+        <div class="card">
+            <!-- Image -->
+            <img src="/static/images/appointment.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <!-- Movie Name -->
+                <h5 class="card-title">Dinesh And Borat Go to America</h5>
+                <!-- <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+                    content. This content is a little bit longer.</p> -->
+                <!-- Genre -->
+                <span class="badge badge-pill badge-primary">Porn</span>
+                <span class="badge badge-pill badge-primary">Corn</span>
+                <span class="badge badge-pill badge-primary">Born</span>
+                <span class="badge badge-pill badge-primary">Dorm</span>
+                       
+                <p class="mt-2">
+                    <i class="fas fa-clock text-secondary"></i> 
+                    <!-- Total Time --> 
+                    69mins
+                    <!-- Ratings -->
+                    <i class="fa fa-star ml-3" aria-hidden="true"></i>
+                    <span>8.0/10</span>
+                </p>
+    
+ 
+            </div>
+        </div>
+
+
+   
+
+    </div>
+
+</div>
+
+<script>
+
+    
+    // function getOMdbMovie() {
+    //     console.log("Helo")
+    //     var count = 10;
+    //     const title = document.getElementById('title').value;
+    //     const poster = document.getElementById('poster');
+    //     const omdbErr = document.getElementById('OMdbErr');
+    //     const posterURL = document.getElementById('posterURL');
+    //     const starring = document.getElementById('starring');
+    //     const story = document.getElementById('story');
+    //     const datepicker = document.getElementById('datepicker');
+    //     fetch('https://www.omdbapi.com/?t=' + title + '&apikey=9d273c3a')
+    //         .then((res) => {
+    //             return res.json();
+    //         }).then((data) => {
+    //             if (data.Response === 'False') {
+    //                 poster.src = '/img/no-image.jpg';
+    //                 omdbErr.style.display = 'inline';
+    //             } else {
+    //                 omdbErr.style.display = 'none';
+    //                 poster.src = data.Poster;
+    //                 starring.value = data.Actors;
+    //                 posterURL.value = data.Poster; // hidden input field to submit
+    //                 story.value = data.Plot;
+    //                 datepicker.value = moment(new
+    //                     Date(data.Released)).format('DD/MM/YYYY');
+    //             }
+    //         }).catch(error => { omdbErr.innerHTML = error; })
+    // }
+</script>
+{% endblock %}
