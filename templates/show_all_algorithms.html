@@ -10,28 +10,29 @@
 
 {% block body %}
 <div class="container mt-4">
+    
+    <div>Algorithm name</div>
     <div class="card-columns">
         <div class="card">
             <!-- Image -->
-            <img src="https://image.tmdb.org/t/p/w400/7G9915LfUQ2lVfwMEEhDsn3kT4B.jpg" class="card-img-top" alt="...">
+            <img src={{moviePosterURL}}  class="card-img-top" alt="...">
             <div class="card-body">
                 <!-- Movie Name -->
-                <h5 class="card-title">Dinesh And Borat Go to America</h5>
+                <h5 class="card-title">{{ movieName }}</h5>
                 <!-- <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
                     content. This content is a little bit longer.</p> -->
                 <!-- Genre -->
-                <span class="badge badge-pill badge-primary">Porn</span>
-                <span class="badge badge-pill badge-primary">Corn</span>
-                <span class="badge badge-pill badge-primary">Born</span>
-                <span class="badge badge-pill badge-primary">Dorm</span>
-                       
+                {% for genre in genresArray %}
+                <span class="badge badge-pill badge-primary">{{ genre }}</span>
+
+                {% endfor %}
                 <p class="mt-2">
                     <i class="fas fa-clock text-secondary"></i> 
                     <!-- Total Time --> 
-                    69mins
+                    {{ totalTime }}
                     <!-- Ratings -->
                     <i class="fa fa-star ml-3" aria-hidden="true"></i>
-                    <span>8.0/10</span>
+                    <span>{{ rating }}/10</span>
                 </p>
     
  
