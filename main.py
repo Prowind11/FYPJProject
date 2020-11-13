@@ -17,8 +17,24 @@ def index():
     response = requests.get(full_url)
     movieInfo = response.json()
 
+    # movieInfo = {
+    #     "posterPath" : False,
+    #     "id": 862,
+    #     "belongs_to_collection": {
+    #         "id":10194,
+    #         "name":"Toy Story Collection",
+    #         "poster_path":"/7G9915LfUQ2lVfwMEEhDsn3kT4B.jpg",
+    #         "backdrop_path":"/9FBwqcd9IRruEDUrTdcaafOMKUq.jpg"
+    #     }
+    # print(movieInfo["belongs_to_collection"]["poster_path"])
+    # }
+    # movieInfo
+    # print(movieInfo)
     # genresArray = []
+
+
     moviePosterPath = movieInfo["belongs_to_collection"]["poster_path"]
+
     moviePosterURL = "https://image.tmdb.org/t/p/w400" + moviePosterPath
     # print(moviePosterPath)
     movieName = movieInfo["belongs_to_collection"]["name"]
@@ -31,10 +47,16 @@ def index():
 
     totalTime = str(movieInfo["runtime"]) + "mins" 
     rating = movieInfo["vote_average"]
+
+    conn.__update_table
+    array1 = str(["lol"])
+    array2 = str(["lol"])
+    conn.__update_user_table(array1,array2)
+    
     # data.__insert_table()
     # # print(moviePosterPath)
     # conn.__insert_table()
-    conn.__update_table()
+    # conn.__update_table()
     # getUserData = conn.get_user_data()
     # print(getUserData) -> [('84', 'Dinesh', 'none', 'none', 'none', 'none', 'none'), ('85', 'Dinesh', '', '', '', '', ''), ('86', 'Dinesh', '', '', '','', '')]
    
@@ -71,5 +93,8 @@ def get_recommend_movie():
 
     return render_template('recommend_movie.html')
 
+@app.route('/show_all_algorithms')
+def show_all_algorithms():
+    return render_template('show_all_algorithms.html')
 if __name__ == '__main__':
     app.run(debug=True)

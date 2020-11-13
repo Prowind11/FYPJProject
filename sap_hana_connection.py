@@ -47,6 +47,10 @@ def __update_table():
     sql = "UPDATE MOVIE_PROJECT_HDI_DB_1.USERS SET WATCHED_MOVIES=?  WHERE USERID = ?"
     cursor.execute(sql,(watchmovieArray,84))
 
+def __update_user_table(itemToItemTopTen,UserToUserTopTen):
+    cursor = __get_connection().cursor()
+    sql = "UPDATE MOVIE_PROJECT_HDI_DB_1.USERS SET ITEMTOITEM_TOP_TEN_ITEM = ? ,USERTOUSER_TOP_TEN_ITEM=? WHERE USERID = ?"
+    cursor.execute(sql,(itemToItemTopTen,UserToUserTopTen,84))
 
 #     cursor.execute("UPDATE MOVIE_PROJECT_HDI_DB_1.USERS SET WATCHED_MOVIES='[handsome]' WHERE USERID = 84")
 # # Write data
