@@ -7,6 +7,7 @@ import sap_hana_connection as conn
 import requests
 
 app = Flask(__name__)
+app.secret_key = "SomeSecretKeyIKnow"
 api_key = "d9ada7322b38e573bf5cd6e8d09091fe"
 base_url = "https://api.themoviedb.org/3/movie/"
 
@@ -96,5 +97,28 @@ def get_recommend_movie():
 @app.route('/show_all_algorithms')
 def show_all_algorithms():
     return render_template('show_all_algorithms.html')
+
+@app.route('/login',methods=['GET', 'POST'])
+def login():
+    # if 'username' in session: # session is from flask, session is the browser window, so if close browser window totally, session data gone
+    #         return redirect(url_for('login'))
+    # else:
+    #     if request.method == "POST":
+    #         form = request.form
+    #         username = data.login_user(form['username'], form['password'])
+    #         if username is None:
+    #             error = "You have entered an invalid username or password"
+    #             print("Login Failed!")
+    #         else:
+    #             session['username'] = username
+    #             return redirect(url_for('index'))
+    #         flash(error)
+
+    return render_template('login.html',isIndex=True)
+
+@app.route('/register',methods=['GET', 'POST'])
+def register():
+    return render_template('register.html',isIndex=True)
+
 if __name__ == '__main__':
     app.run(debug=True)

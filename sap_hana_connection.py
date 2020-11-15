@@ -61,3 +61,4 @@ def __update_user_table(itemToItemTopTen,UserToUserTopTen):
 
 # query = 'INSERT INTO schema.t1 VALUES (?, ?, ?)'
 # cursor.executemany(query, parameters)
+

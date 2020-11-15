@@ -1,0 +1,31 @@
+{% extends "includes/base_template.html" %}
+{% block title %}Create your account{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/styles/login.css">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center h-100">
+        <div class="col-lg-5 col-md-7">
+            <form class="text-center"  method="post">
+                <h1 class="mb-5 font-weight-light text-uppercase mt-3">Register</h1>
+                <div class="form-group">
+                    <input id='username' type="text" class="form-control rounded-pill form-control-lg" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <input id='password' type="password" class="form-control rounded-pill form-control-lg" placeholder="Password">
+                </div>
+
+                <button type="submit"
+                    class="btn-info mt-5 btn-lg btn-custom btn-block text-uppercase ">Register</button>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
