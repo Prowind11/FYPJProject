@@ -9,28 +9,66 @@
 
 
 {% block body %}
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-3">
-            <!-- Image -->
-            <img id="poster" src="/static/images/appointment.png" alt=""
-            class="border img-thumbnail img-fluid" style="height:95%;width:100%">
+<div class="container">
+    <div class="border-bottom p-5">
+        <label class="mb-0">Search User: <button class="badge btn btn-danger mb-2"
+                style="border-radius: .25rem .25rem 0 0;" data-toggle="collapse"
+                data-target="#searchbarInfo">?</button></label>
+        <div id="searchbarInfo" class="collapse">
+            <p class="text-info">Hello Hello</p>
+            <!-- <p class="bg-secondary mb-0 p-1">For example, the formula of squaring: <span
+                    class="text-warning">5**2</span></p>
+            <p class="bg-secondary p-1">It will be written as: <span class="text-warning">{}**2</span></p> -->
+        </div>
 
-            <!-- Movie Name -->
-            <!-- Genre -->
-            <!-- Total Time -->
-            <!-- Ratings -->
+        <!-- Search Bar -->
+        <div class="input-group shadow-sm">
+            <span class="input-group-prepend">
+                <div class="border-right-0 input-group-text bg-transparent"><i class="fa fa-search"></i></div>
+            </span>
+            <input id="tbSearchQuery" class="shadow-none input-height-lg rounded form-control  border-left-0"
+                type="text" placeholder="Search" name="searchQuery" />
         </div>
-        <div class="col-3">
-            User Profile
+
+        <div class="border-top thick-border mt-3 mb-3">
+            <div class="row">
+                <div class="col-md-3 mt-3">
+                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link active" id="v-pills-movies-tab" data-toggle="pill" href="#v-pills-movies"
+                            role="tab" aria-controls="v-pills-movies" aria-selected="true">Movies</a>
+                        <!-- <a class="nav-link" id="v-pills-circles-tab" data-toggle="pill" href="#v-pills-circles"
+                            role="tab" aria-controls="v-pills-circles" aria-selected="false">Circles</a> -->
+                        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
+                            aria-controls="v-pills-profile" aria-selected="false">Profile</a>
+                    </div>
+                </div>
+                <div class="col-md-9 border-left">
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active" id="v-pills-movies" role="tabpanel" aria-labelledby="v-pills-movies-tab">
+                            <div id="no-post-message" class="text-center mt-2">
+                                <span class="h4">
+                                    No movies found
+                                </span>
+                            </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                <div id="no-circles-message" class="text-center mt-2">
+                                    <span class="h4">No profile found
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- <div class="tab-pane fade" id="v-pills-people" role="tabpanel" aria-labelledby="v-pills-people-tab">
+                                <div id="no-user-message" class="text-center">
+                                    <span class="h4">No people found
+                                    </span>
+                                </div> -->
+                            </div>
+                </div>
+            </div>
+
         </div>
-        <div class="col-3">
-            User Profile
-        </div>
-        <div class="col-3">
-            User Profile
-        </div>
+
     </div>
-
 </div>
 {% endblock %}
