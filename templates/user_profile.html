@@ -22,13 +22,20 @@
         </div>
 
         <!-- Search Bar -->
-        <div class="input-group shadow-sm">
-            <span class="input-group-prepend">
-                <div class="border-right-0 input-group-text bg-transparent"><i class="fa fa-search"></i></div>
-            </span>
-            <input id="tbSearchQuery" class="shadow-none input-height-lg rounded form-control  border-left-0"
-                type="text" placeholder="Search" name="searchQuery" />
-        </div>
+
+
+        <form action="/search" method="post">
+
+            <div class="input-group shadow-sm">
+                <!-- <span class="input-group-prepend">
+                    <div class="border-right-0 input-group-text bg-transparent"><i class="fa fa-search"></i></div>
+                </span> -->
+                <input id="tbSearchQuery" class="shadow-none input-height-lg rounded form-control "
+                    type="text" placeholder="Search" name="search" value="{{request.form.search}}"/>
+                <button class="btn btn-outline-success ml-2" type="submit">Search</button>
+            </div>
+
+        </form>
 
         <div class="border-top thick-border mt-3 mb-3">
             <div class="row">
@@ -38,32 +45,34 @@
                             role="tab" aria-controls="v-pills-movies" aria-selected="true">Movies</a>
                         <!-- <a class="nav-link" id="v-pills-circles-tab" data-toggle="pill" href="#v-pills-circles"
                             role="tab" aria-controls="v-pills-circles" aria-selected="false">Circles</a> -->
-                        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
-                            aria-controls="v-pills-profile" aria-selected="false">Profile</a>
+                        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile"
+                            role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
                     </div>
                 </div>
                 <div class="col-md-9 border-left">
                     <div class="tab-content" id="v-pills-tabContent">
-                        <div class="tab-pane fade show active" id="v-pills-movies" role="tabpanel" aria-labelledby="v-pills-movies-tab">
+                        <div class="tab-pane fade show active" id="v-pills-movies" role="tabpanel"
+                            aria-labelledby="v-pills-movies-tab">
                             <div id="no-post-message" class="text-center mt-2">
                                 <span class="h4">
                                     No movies found
                                 </span>
                             </div>
-                            </div>
+                        </div>
 
-                            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                                <div id="no-circles-message" class="text-center mt-2">
-                                    <span class="h4">No profile found
-                                    </span>
-                                </div>
+                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                            aria-labelledby="v-pills-profile-tab">
+                            <div id="no-circles-message" class="text-center mt-2">
+                                <span class="h4">No profile found
+                                </span>
                             </div>
-                            <!-- <div class="tab-pane fade" id="v-pills-people" role="tabpanel" aria-labelledby="v-pills-people-tab">
+                        </div>
+                        <!-- <div class="tab-pane fade" id="v-pills-people" role="tabpanel" aria-labelledby="v-pills-people-tab">
                                 <div id="no-user-message" class="text-center">
                                     <span class="h4">No people found
                                     </span>
                                 </div> -->
-                            </div>
+                    </div>
                 </div>
             </div>
 
