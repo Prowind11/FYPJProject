@@ -10,6 +10,7 @@ app = Flask(__name__)
 app.secret_key = "SomeSecretKeyIKnow"
 api_key = "d9ada7322b38e573bf5cd6e8d09091fe"
 base_url = "https://api.themoviedb.org/3/movie/"
+userData = []
 
 @app.route('/')
 def index():
@@ -84,6 +85,17 @@ def index():
 
 @app.route('/user_profile')
 def user_profile():
+    global userData
+    print(len())
+    count = len(userData)
+    if count == 0:
+        userData = None
+        print(userData)
+    else:
+        itemToItemTopTen = userData[0][3]
+        userToUserTopTen = userData[0][4]
+        print(itemToItemTopTen)
+        print(userToUserTopTen)
     return render_template('user_profile.html')
 
 
@@ -129,8 +141,10 @@ def search():
         if (searchValue.isnumeric()):
             # Search by ID 
             user = conn.get_user_data_by_id(searchValue)
-            print(user)
-            # print("Hello world")
+            global userData 
+            userData = []
+            userData.append(user)
+            return redirect(url_for('user_profile'))
         else:
             # Search by name string 
             print("nononoon")

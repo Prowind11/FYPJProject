@@ -27,10 +27,19 @@ def get_user_data():
 
 def get_user_data_by_id(id):
     users = get_user_data()
+    # As looping through hundred of item can be slow so i just add a boolean to break the loop if found
+    # 
+    itemFound = False
     if users is not None:
         for user in users:
-            print(user)
-
+            if (itemFound == False):
+                if (user[0] == id):
+                    itemFound = True
+                    return user
+            else:
+                break
+            # Check UserName    
+            # else:
 
     return None
 
