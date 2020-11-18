@@ -123,8 +123,10 @@ class MovieLens:
         if movieID in movieID_to_name:
             return movieID_to_name[movieID]
 
-ml = MovieLens()
-print(len(ml.get_user_movie_watched()))
+    def getMovieId(self,movieName):
+        if movieName in name_to_movieID:
+            return name_to_movieID[movieName]
 
-ml.read_links_csv()
-print("hello hello hello",ml.get_user_movie_watched().get("15"))
+    def getTmdbId(self,movieId):
+        if movieId in movieID_to_tmdbID:
+            return movieID_to_tmdbID[movieId]

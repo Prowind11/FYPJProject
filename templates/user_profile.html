@@ -30,8 +30,8 @@
                 <!-- <span class="input-group-prepend">
                     <div class="border-right-0 input-group-text bg-transparent"><i class="fa fa-search"></i></div>
                 </span> -->
-                <input id="tbSearchQuery" class="shadow-none input-height-lg rounded form-control "
-                    type="text" placeholder="Search" name="search" value="{{request.form.search}}"/>
+                <input id="tbSearchQuery" class="shadow-none input-height-lg rounded form-control " type="text"
+                    placeholder="Search" name="search" value="{{request.form.search}}" />
                 <button class="btn btn-outline-success ml-2" type="submit">Search</button>
             </div>
 
@@ -54,9 +54,15 @@
                         <div class="tab-pane fade show active" id="v-pills-movies" role="tabpanel"
                             aria-labelledby="v-pills-movies-tab">
                             <div id="no-post-message" class="text-center mt-2">
+                                {% if userToUserTopTen is none %}
                                 <span class="h4">
                                     No movies found
                                 </span>
+                                {% else %}
+                                <span class="h4">
+                                    testing
+                                </span>
+                                {% endif %}
                             </div>
                         </div>
 
@@ -67,17 +73,18 @@
                                 </span>
                             </div>
                         </div>
-                        <!-- <div class="tab-pane fade" id="v-pills-people" role="tabpanel" aria-labelledby="v-pills-people-tab">
-                                <div id="no-user-message" class="text-center">
-                                    <span class="h4">No people found
-                                    </span>
-                                </div> -->
+                        <div class="tab-pane fade" id="v-pills-people" role="tabpanel"
+                            aria-labelledby="v-pills-people-tab">
+                            <div id="no-user-message" class="text-center">
+                                <span class="h4">No people found
+                                     </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
-
     </div>
-</div>
-{% endblock %}
+    {% endblock %}

@@ -5,7 +5,8 @@ import os
 import sap_hana_data as data
 import sap_hana_connection as conn
 import requests
-import MovieLens as ml
+import MovieLens as movieLenFile
+
 app = Flask(__name__)
 app.secret_key = "SomeSecretKeyIKnow"
 api_key = "d9ada7322b38e573bf5cd6e8d09091fe"
@@ -14,7 +15,7 @@ userData = []
 
 @app.route('/')
 def index():
-  
+    
     movieId = str(862)
     full_url = base_url + movieId + "?api_key=" + api_key + "&language=en-US"
     response = requests.get(full_url)
@@ -45,58 +46,46 @@ def index():
 
     for genre in movieInfo["genres"]:
         genresArray.append(genre["name"])
-        # print("genre:",genre["name"])
-    # print(genresArray)
 
     totalTime = str(movieInfo["runtime"]) + "mins" 
     rating = movieInfo["vote_average"]
-
-    # conn.__update_table
-    # array1 = str(["lol"])
-    # array2 = str(["lol"])
-    # conn.__update_user_table(array1,array2,1)
-    
-    
-    # data.__insert_table()
-    # # print(moviePosterPath)
-    # conn.__insert_table()
-    # conn.__update_table()
-    # getUserData = conn.get_user_data()
     # print(getUserData) -> [('84', 'Dinesh', 'none', 'none', 'none', 'none', 'none'), ('85', 'Dinesh', '', '', '', '', ''), ('86', 'Dinesh', '', '', '','', '')]
    
-    # results = data.__retrieve_user_table()
-    # print(results) 
-    # allData = data.__retrieve_table()
-    # print(allData)
-    #    <!-- Image -->
-    #     <!-- Movie Name -->
-    #     <!-- Genre -->
-
-    #     <!-- Total Time -->
-    #     <!-- Ratings -->
-
-    # print(movieInfo)
-    # if (response == 200){
-    #     print(request)
-    # }
-
+ 
     return render_template('show_all_algorithms.html',totalTime = totalTime, rating = rating, movieName = movieName, genresArray = genresArray,moviePosterURL = moviePosterURL)
 
 
 @app.route('/user_profile')
 def user_profile():
+    moviesIdArray = []
+    tmdbIdArray = []
     global userData
-    print(len())
+    # print(len())
+    ml = movieLenFile.MovieLens()
+    # print(len(userData) == 0).
+    itemToItemTopTen = None
+    userToUserTopTen = None
     count = len(userData)
-    if count == 0:
-        userData = None
-        print(userData)
-    else:
+    # print(count == 0)
+    if (count > 0) :
         itemToItemTopTen = userData[0][3]
         userToUserTopTen = userData[0][4]
-        print(itemToItemTopTen)
-        print(userToUserTopTen)
-    return render_template('user_profile.html')
+        # print(itemToItemTopTen.split(","))
+        # print("itemtoitem",itemToItemTopTen)
+        # print(type(itemToItemTopTen))
+        # print(len(itemToItemTopTen))
+        # for movieName in itemToItemTopTen:
+        #     moviesIdArray.append(ml.getMovieId(movieName))
+        #     print(movieName)
+    #         for movieId in movieName:    
+    #             tmdbIdArray.append(ml.getTmdbId(movieId))
+    # print(tmdbIdArray)
+
+    # movieId = str(862)
+    # full_url = base_url + movieId + "?api_key=" + api_key + "&language=en-US"
+    # response = requests.get(full_url)
+    # movieInfo = response.json()
+    return render_template('user_profile.html',userToUserTopTen = userToUserTopTen , itemToItemTopTen = itemToItemTopTen)
 
 
 @app.route('/recommend_movie')
@@ -143,7 +132,8 @@ def search():
             user = conn.get_user_data_by_id(searchValue)
             global userData 
             userData = []
-            userData.append(user)
+            if user is not None:
+                userData.append(user)
             return redirect(url_for('user_profile'))
         else:
             # Search by name string 
@@ -154,4 +144,13 @@ def search():
     return render_template('user_profile.html',isIndex=True)
 
 if __name__ == '__main__':
+    ml = movieLenFile.MovieLens()
+
+    ml.read_links_csv()
+    ml.get_user_movie_watched()
+    ml.read_item_names()
+    # print("hello hello hello",ml.get_user_movie_watched().get("15"))
+    # movieID_to_name, name_to_movieID, movieWithNameAndGenre = ml.read_item_names()
+    # print(ml.getMovieId("Star Wars: Episode V - The Empire Strikes Back (1980)"))
+    # print(ml.getMovieName("1"))
     app.run(debug=True)
