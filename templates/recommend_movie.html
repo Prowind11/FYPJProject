@@ -8,7 +8,7 @@
 
 {% block body %}
 <div class="container mt-4">
-<!--     
+    <!--     
             <div class="border-bottom p-5">
                 <label class="mb-0">Search User: <button class="badge btn btn-danger mb-2"
                         style="border-radius: .25rem .25rem 0 0;" data-toggle="collapse"
@@ -16,49 +16,93 @@
                 <div id="searchbarInfo" class="collapse">
                     <p class="text-info">Hello Hello</p>
             -->
-            <div class="border-bottom p-5">
-                <label class="mb-0">Search Movie: <button class="badge btn btn-danger mb-2"
-                        style="border-radius: .25rem .25rem 0 0;" data-toggle="collapse"
-                        data-target="#searchbarInfo">?</button></label>
-                <div id="searchbarInfo" class="collapse">
-                    <p class="text-info">Search related movies</p>
-                    <!-- <p class="bg-secondary mb-0 p-1">For example, the formula of squaring: <span
+    <div class="border-bottom p-5">
+        <label class="mb-0">Search Movie: <button class="badge btn btn-danger mb-2"
+                style="border-radius: .25rem .25rem 0 0;" data-toggle="collapse"
+                data-target="#searchbarInfo">?</button></label>
+        <div id="searchbarInfo" class="collapse">
+            <p class="text-info">Search related movies</p>
+            <!-- <p class="bg-secondary mb-0 p-1">For example, the formula of squaring: <span
                             class="text-warning">5**2</span></p>
                     <p class="bg-secondary p-1">It will be written as: <span class="text-warning">{}**2</span></p> -->
-                </div>
-        
-                <!-- Search Bar -->
-        
-        
-                <form action="/search" method="post">
-        
-                    <div class="input-group shadow-sm">
-                        <!-- <span class="input-group-prepend">
+        </div>
+
+        <!-- Search Bar -->
+
+
+        <form action="/findSimilarityMovie" method="post">
+
+            <div class="input-group shadow-sm">
+                <!-- <span class="input-group-prepend">
                             <div class="border-right-0 input-group-text bg-transparent"><i class="fa fa-search"></i></div>
                         </span> -->
-                        <input id="tbSearchQuery" class="shadow-none input-height-lg rounded form-control " type="text"
-                            placeholder="Search" name="search" value="{{request.form.search}}" />
-                        <button class="btn btn-outline-success ml-2" type="submit">Search</button>
-                    </div>
-        
-                </form>
+                <input id="autoComplete" class="shadow-none input-height-lg rounded form-control " autocomplete="off"  type="text"
+                    placeholder="Search" name="search" value="{{request.form.search}}" />
+                <button class="btn btn-outline-success ml-2" type="submit">Search</button>
+            </div>
 
-</div>
+        </form>
 
-<script>
-    // function submit_movie_watched(){
-    //     var movieNameAndRating = []
-    //     var movieName;
-    //     var rating;
-        
-    //     var entry = {
-    //         movieName: movieName.value,
-    //         rating: rating.value
-    //     }
 
-    //     fetch('$(window.origin}/',{
+        <div class="border-top thick-border mt-3 mb-3">
+            <div class="row">
+                <div class="col-12 mt-3">
+                    {% if moviesResult is none %}
+                    <div>hello</div>
+                    {% else %}
 
-    //     })
-    // }
-</script>
-{% endblock %}
+                    {%for i in range(0, count)%}
+                        {{moviesResult[i]}}
+                    {%endfor%}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+    
+
+    </div>
+
+    <script async>
+
+        const allMovieData = {{allMoviesArray|tojson}};
+        console.log(allMovieData)
+        window.addEventListener("load", async function(e) {
+            // const my_api_key = "d9ada7322b38e573bf5cd6e8d09091fe";
+            // const title = "tt";
+            // // const source = await fetch( `https://api.themoviedb.org/3/movie/862?api_key=${my_api_key}&language=en-US`);
+            // const source = await fetch( `https://api.themoviedb.org/3/search/movie?api_key=${my_api_key}&query=${title}`);
+            // const data = await source.json();
+            // console.log(source)
+            // console.log(data)
+            
+            new autoComplete({
+                data: {
+                    src: allMovieData,
+                    // key: ["original_title"]
+                },
+                trigger: {
+                    event: ["input", "focusin", "focusout"]
+                },
+                placeHolder: "e.g. Toy Story",
+                selector: "#autoComplete",
+                highlight: true,
+                resultsList: {
+                    render: true,
+                },
+                resultItem: {
+                    content: (data, source) => {
+                        source.innerHTML = data.match;
+                    },
+                    element: "li"
+                },
+                onSelection: feedback => {
+                    var selectedMovie = feedback.selection.value
+                    document.getElementById("autoComplete").value = selectedMovie
+                }
+            });
+        })
+
+    </script>
+    {% endblock %}

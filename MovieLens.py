@@ -16,6 +16,7 @@ movieID_to_name = {}
 name_to_movieID = {}
 movieWithNameAndGenre = {}
 movieID_to_tmdbID = {}
+movieNameArray = []
 
 movieUserWatched = {}
 testSubject = '84'
@@ -62,7 +63,9 @@ class MovieLens:
                 movieWithNameAndGenre[movieID]['movieName'] = movieName
                 movieWithNameAndGenre[movieID]['genres'] = genres
 
-        return movieID_to_name, name_to_movieID, movieWithNameAndGenre
+                movieNameArray.append(movieName)
+            movieNameArray.pop(0)
+        return movieID_to_name, name_to_movieID, movieWithNameAndGenre,movieNameArray
     
     
     # links.csv 
@@ -131,11 +134,11 @@ class MovieLens:
         if movieId in movieID_to_tmdbID:
             return movieID_to_tmdbID[movieId]
 
-ml = MovieLens()
-ml.read_links_csv()
-ml.get_user_movie_watched()
-movieID_to_name, name_to_movieID, movieWithNameAndGenre = ml.read_item_names()
+# ml = MovieLens()
+# ml.read_links_csv()
+# ml.get_user_movie_watched()
+# movieID_to_name, name_to_movieID, movieWithNameAndGenre, allmovieNameArray = ml.read_item_names()
 
-# print(len(ml.getMovieName("858")))
-print(name_to_movieID.get("Lord of the Rings: The Fellowship of the Ring, The (2001)"))
-print(movieID_to_name.get('318'))
+# # print(len(ml.getMovieName("858")))
+# print(name_to_movieID.get("Lord of the Rings: The Fellowship of the Ring, The (2001)"))
+# print(movieID_to_name.get('318'))

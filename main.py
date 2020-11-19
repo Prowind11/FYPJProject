@@ -6,6 +6,7 @@ import sap_hana_data as data
 import sap_hana_connection as conn
 import requests
 import MovieLens as movieLenFile
+import similarityMovie as sm
 
 app = Flask(__name__)
 app.secret_key = "SomeSecretKeyIKnow"
@@ -145,11 +146,10 @@ def user_profile():
 
 @app.route('/recommend_movie')
 def recommend_movie():
-    return render_template('recommend_movie.html')
+    return render_template('recommend_movie.html', allMoviesArray=movieLenFile.movieNameArray)
 
 @app.route('/get_recommend_movie',methods=["GET"])
 def get_recommend_movie():
-
     return render_template('recommend_movie.html')
 
 @app.route('/show_all_algorithms')
@@ -198,6 +198,23 @@ def search():
         print("not searching")
     return render_template('user_profile.html',isIndex=True)
 
+@app.route('/findSimilarityMovie',methods=['GET', 'POST'])
+def searchaa():
+    movieResult = None
+    if request.method == "POST":
+        searchValue = request.form['search']
+        print(type(searchValue))
+        moviesResult = sm.findSimilarItem(searchValue)
+        # itemToItemTopTenNameString = removeFirstLastChar.replace("'","")
+        # itemToItemTopTenNameArray = itemToItemTopTenNameString.split(',')
+        print(moviesResult)
+        count = len(moviesResult)
+        # print(len(moviesResult))
+    else:
+        # Search by name string 
+        print("nononoon")
+          
+    return render_template('recommend_movie.html', allMoviesArray=movieLenFile.movieNameArray,moviesResult = moviesResult,count = count)
 if __name__ == '__main__':
     ml = movieLenFile.MovieLens()
 
