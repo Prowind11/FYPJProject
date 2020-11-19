@@ -59,33 +59,88 @@ def index():
 def user_profile():
     moviesIdArray = []
     tmdbIdArray = []
+
+    movieNameArray = []
+    moviePosterUrlArray= []
+    moviesGenresArray = []
+    totalTimeArray = []
+    ratingArray = []
+
+
     global userData
     # print(len())
     ml = movieLenFile.MovieLens()
-    # print(len(userData) == 0).
-    itemToItemTopTen = None
-    userToUserTopTen = None
+    # print(len(userData) == 0)
+    itemToItemTopTenID = None
+    userToUserTopTenID = None
+    totalMovieCount = 0
     count = len(userData)
     # print(count == 0)
-    if (count > 0) :
-        itemToItemTopTen = userData[0][3]
-        userToUserTopTen = userData[0][4]
-        # print(itemToItemTopTen.split(","))
-        # print("itemtoitem",itemToItemTopTen)
-        # print(type(itemToItemTopTen))
-        # print(len(itemToItemTopTen))
-        # for movieName in itemToItemTopTen:
-        #     moviesIdArray.append(ml.getMovieId(movieName))
-        #     print(movieName)
-    #         for movieId in movieName:    
-    #             tmdbIdArray.append(ml.getTmdbId(movieId))
-    # print(tmdbIdArray)
+    if (count > 0) : 
 
-    # movieId = str(862)
-    # full_url = base_url + movieId + "?api_key=" + api_key + "&language=en-US"
-    # response = requests.get(full_url)
-    # movieInfo = response.json()
-    return render_template('user_profile.html',userToUserTopTen = userToUserTopTen , itemToItemTopTen = itemToItemTopTen)
+        itemToItemTopTenName = userData[0][3]
+        userToUserTopTenName = userData[0][4]
+
+        itemToItemTopTenID = userData[0][5] # We retrieve it is a whole string
+        userToUserTopTenID = userData[0][6]
+
+        removeFirstLastChar = itemToItemTopTenID[1:-1]
+        itemToItemTopTenIdString = removeFirstLastChar.replace("'","")
+        itemToItemTopTenIDArray = itemToItemTopTenIdString.split(',')
+ 
+        removeFirstLastChar = itemToItemTopTenName[1:-1]
+        itemToItemTopTenNameString = removeFirstLastChar.replace("'","")
+        itemToItemTopTenNameArray = itemToItemTopTenNameString.split(',')
+        # print(itemToItemTopTenNameArray)
+
+        for movieId in itemToItemTopTenIDArray:   
+            # Remove space in the string
+            movieIdTrimmed = movieId.strip() 
+            tmdbIdArray.append(ml.getTmdbId(movieIdTrimmed))
+            tmdbId = ml.getTmdbId(movieIdTrimmed)
+
+            # print('tmdbid: ',tmdbId)
+            
+            movieId = str(tmdbId)
+            full_url = base_url + movieId + "?api_key=" + api_key + "&language=en-US"
+            response = requests.get(full_url)
+            movieInfo = response.json()
+            print(movieInfo)
+            moviePosterURL = ""
+            # print(movieInfo)
+            moviePosterPath = movieInfo["belongs_to_collection"]
+            if moviePosterPath is not None:
+                moviePosterPath = movieInfo["belongs_to_collection"]["poster_path"]
+                moviePosterURL = "https://image.tmdb.org/t/p/w400" + moviePosterPath
+            else:
+                moviePosterPath = movieInfo["backdrop_path"]
+                moviePosterURL = "https://image.tmdb.org/t/p/w400" + moviePosterPath
+            # print(movieInfo)
+        #     print(moviePosterPath)
+
+            # # # print(moviePosterPath)
+            # movieName = movieInfo["belongs_to_collection"]["name"]
+            genresArray = []
+
+            for genre in movieInfo["genres"]:
+                genresArray.append(genre["name"])
+
+            for movieName in itemToItemTopTenNameArray:
+                movieNameTrim = movieName.replace('"', '')
+                movieNameArray.append(movieNameTrim)
+
+            totalTime = str(movieInfo["runtime"]) + "mins" 
+            rating = movieInfo["vote_average"]
+            # movieNameArray.append(movieName)
+            moviePosterUrlArray.append(moviePosterURL)
+            moviesGenresArray.append(genresArray)
+            totalTimeArray.append(totalTime)
+            ratingArray.append(rating)
+
+        totalMovieCount = len(moviePosterUrlArray)
+        print(len(moviePosterUrlArray))
+
+    return render_template('user_profile.html',movieNameArray = movieNameArray , moviePosterUrlArray = moviePosterUrlArray,moviesGenresArray= moviesGenresArray,totalTimeArray = totalTimeArray,ratingArray=ratingArray,count=totalMovieCount)
 
 
 @app.route('/recommend_movie')

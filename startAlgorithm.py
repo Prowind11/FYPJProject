@@ -56,10 +56,10 @@ trainSet = data.build_full_trainset()
 # print(simsMatrix)
 for userId in total_user:
     testSubject = str(userId)
-    conn.__insert_user_table(testSubject)
+    conn.__update_user_table_test_test(testSubject)
     itemToItemTopTen = []
     UserToUserTopTen = []
-
+    
 
     # Maybe can put all the prediction in the dump file so we can use in the future 
     # file_name = os.path.expanduser('~/dump_file_100k_KNNBasic')
@@ -115,11 +115,12 @@ for userId in total_user:
                 movieID = trainSet.to_raw_iid(itemID)
                 # print(movieID)
                 # print(ml.getMovieName(str(movieID)), ratingSum)
-                movieName = ml.getMovieName(str(movieID))
+                # movieName = ml.getMovieName(str(movieID))
+                stringMovieId = str(movieID)
                 if x == 0:
-                    itemToItemTopTen.append(movieName)
+                    itemToItemTopTen.append(stringMovieId)
                 else:
-                    UserToUserTopTen.append(movieName)
+                    UserToUserTopTen.append(stringMovieId)
                 pos += 1
                 if (pos > 10):
                     break
@@ -129,7 +130,7 @@ for userId in total_user:
 
         #  Update 
     print(itemToItemTopTen,UserToUserTopTen,userId)
-    conn.__update_user_table(str(itemToItemTopTen),str(UserToUserTopTen),str(userId))
+    conn.__update_user_table_item_id(str(itemToItemTopTen),str(UserToUserTopTen),str(userId))
 # param_grid = {'n_epochs': [20, 30], 'lr_all': [0.005, 0.010],
 #               'n_factors': [50, 100]}
 # gs = GridSearchCV(SVD, param_grid, measures=['rmse', 'mae'], cv=3)

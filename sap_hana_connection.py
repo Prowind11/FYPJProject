@@ -50,15 +50,25 @@ def __insert_user_table(userId):
     userName = ""
     password = ""
     itemToItem = ""
+    itemtoitemId = ""
+    userToUserId = ""
     userToUser = ""
     svd = ""
     watched_movies = ""
     merged_algorithms = ""
                                                                    
     cursor = __get_connection().cursor()
-    sql = "INSERT INTO MOVIE_PROJECT_HDI_DB_1.USERS VALUES (?,?,?,?,?,?,?,?)"
-    cursor.execute(sql,(userId,userName,password,itemToItem,userToUser,svd,watched_movies,merged_algorithms))
+    sql = "INSERT INTO MOVIE_PROJECT_HDI_DB_1.USERS VALUES (?,?,?,?,?,?,?,?,?,?)"
+    cursor.execute(sql,(userId,userName,password,itemToItem,userToUser,itemtoitemId,userToUserId,svd,watched_movies,merged_algorithms))
 
+
+
+def __update_user_table_test_test(userID):
+    cursor = __get_connection().cursor()
+    itemtoitemId = ""
+    userToUserId = ""
+    sql = "UPDATE MOVIE_PROJECT_HDI_DB_1.USERS SET ITEMTOITEM_TOP_TEN_ITEM_ID = ? ,USERTOUSER_TOP_TEN_ITEM_ID=? WHERE USERID = ?"
+    cursor.execute(sql,(itemtoitemId,userToUserId,userID))
 
 def __update_table():
     watchmovieArray =  str(["testing"])
@@ -73,6 +83,11 @@ def __update_user_table(itemToItemTopTen,UserToUserTopTen,userID):
     sql = "UPDATE MOVIE_PROJECT_HDI_DB_1.USERS SET ITEMTOITEM_TOP_TEN_ITEM = ? ,USERTOUSER_TOP_TEN_ITEM=? WHERE USERID = ?"
     cursor.execute(sql,(itemToItemTopTen,UserToUserTopTen,userID))
 
+
+def __update_user_table_item_id(itemToItemTopTenID,UserToUserTopTenID,userID):
+    cursor = __get_connection().cursor()
+    sql = "UPDATE MOVIE_PROJECT_HDI_DB_1.USERS SET ITEMTOITEM_TOP_TEN_ITEM_ID = ? ,USERTOUSER_TOP_TEN_ITEM_ID=? WHERE USERID = ?"
+    cursor.execute(sql,(itemToItemTopTenID,UserToUserTopTenID,userID))
 
 #     cursor.execute("UPDATE MOVIE_PROJECT_HDI_DB_1.USERS SET WATCHED_MOVIES='[handsome]' WHERE USERID = 84")
 # # Write data

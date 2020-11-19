@@ -130,3 +130,12 @@ class MovieLens:
     def getTmdbId(self,movieId):
         if movieId in movieID_to_tmdbID:
             return movieID_to_tmdbID[movieId]
+
+ml = MovieLens()
+ml.read_links_csv()
+ml.get_user_movie_watched()
+movieID_to_name, name_to_movieID, movieWithNameAndGenre = ml.read_item_names()
+
+# print(len(ml.getMovieName("858")))
+print(name_to_movieID.get("Lord of the Rings: The Fellowship of the Ring, The (2001)"))
+print(movieID_to_name.get('318'))

@@ -8,25 +8,40 @@
 
 {% block body %}
 <div class="container mt-4">
-    <div class="row">
-        <div class="col-3">
-            <!-- Image -->
-
-            <!-- Movie Name -->
-            <!-- Genre -->
-            <!-- Total Time -->
-            <!-- Ratings -->
-        </div>
-        <div class="col-3">
-            User Profile
-        </div>
-        <div class="col-3">
-            User Profile
-        </div>
-        <div class="col-3">
-            User Profile
-        </div>
-    </div>
+<!--     
+            <div class="border-bottom p-5">
+                <label class="mb-0">Search User: <button class="badge btn btn-danger mb-2"
+                        style="border-radius: .25rem .25rem 0 0;" data-toggle="collapse"
+                        data-target="#searchbarInfo">?</button></label>
+                <div id="searchbarInfo" class="collapse">
+                    <p class="text-info">Hello Hello</p>
+            -->
+            <div class="border-bottom p-5">
+                <label class="mb-0">Search Movie: <button class="badge btn btn-danger mb-2"
+                        style="border-radius: .25rem .25rem 0 0;" data-toggle="collapse"
+                        data-target="#searchbarInfo">?</button></label>
+                <div id="searchbarInfo" class="collapse">
+                    <p class="text-info">Search related movies</p>
+                    <!-- <p class="bg-secondary mb-0 p-1">For example, the formula of squaring: <span
+                            class="text-warning">5**2</span></p>
+                    <p class="bg-secondary p-1">It will be written as: <span class="text-warning">{}**2</span></p> -->
+                </div>
+        
+                <!-- Search Bar -->
+        
+        
+                <form action="/search" method="post">
+        
+                    <div class="input-group shadow-sm">
+                        <!-- <span class="input-group-prepend">
+                            <div class="border-right-0 input-group-text bg-transparent"><i class="fa fa-search"></i></div>
+                        </span> -->
+                        <input id="tbSearchQuery" class="shadow-none input-height-lg rounded form-control " type="text"
+                            placeholder="Search" name="search" value="{{request.form.search}}" />
+                        <button class="btn btn-outline-success ml-2" type="submit">Search</button>
+                    </div>
+        
+                </form>
 
 </div>
 
