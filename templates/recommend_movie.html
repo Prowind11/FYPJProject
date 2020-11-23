@@ -48,12 +48,41 @@
             <div class="row">
                 <div class="col-12 mt-3">
                     {% if moviesResult is none %}
-                    <div>hello</div>
+                    <div>No Movie Recommended Yet</div>
                     {% else %}
 
-                    {%for i in range(0, count)%}
-                        {{moviesResult[i]}}
-                    {%endfor%}
+                    <div class="row">
+                        {%for i in range(0, count)%}
+                        <div class="col-4 mt-3">
+                            <div class="card h-100">
+                                <!-- Image -->
+                                <img src={{moviePosterUrlArray[i]}} class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <!-- Movie Name -->
+                                    <h5 class="card-title">{{ movieNameArray[i] }}</h5>
+                                    <!-- <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+content. This content is a little bit longer.</p> -->
+                                    <!-- Genre -->
+                                        {% for genre in moviesGenresArray[i] %}
+                                        <span class="badge badge-pill badge-primary">{{ genre }}</span>
+                                        {% endfor %}
+                                    <p class="mt-2">
+                                        <i class="fas fa-clock text-secondary"></i>
+                                        <!-- Total Time -->
+                                        {{ totalTimeArray[i] }}
+                                        <!-- Ratings -->
+                                        <i class="fa fa-star ml-3" aria-hidden="true"></i>
+                                        <span>{{ ratingArray[i] }}/10</span>
+                                    </p>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        {%endfor%}
+                    </div>
+
+
                     {% endif %}
                 </div>
             </div>

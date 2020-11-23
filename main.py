@@ -146,7 +146,10 @@ def user_profile():
 
 @app.route('/recommend_movie')
 def recommend_movie():
-    return render_template('recommend_movie.html', allMoviesArray=movieLenFile.movieNameArray)
+    allMoviesArray =  None
+    moviesResult = None
+    count = 0
+    return render_template('recommend_movie.html', allMoviesArray=movieLenFile.movieNameArray,count= count, moviesResult = moviesResult)
 
 @app.route('/get_recommend_movie',methods=["GET"])
 def get_recommend_movie():
@@ -199,22 +202,92 @@ def search():
     return render_template('user_profile.html',isIndex=True)
 
 @app.route('/findSimilarityMovie',methods=['GET', 'POST'])
-def searchaa():
-    movieResult = None
+def findimilarityMovie():
+    moviesResult = None
+    # allMoviesArray= None
+
+    moviesIdArray = []
+    tmdbIdArray = []
+
+    movieNameArray = []
+    moviePosterUrlArray= []
+    moviesGenresArray = []
+    totalTimeArray = []
+    ratingArray = []
+
+    count = 0 
     if request.method == "POST":
         searchValue = request.form['search']
         print(type(searchValue))
         moviesResult = sm.findSimilarItem(searchValue)
-        # itemToItemTopTenNameString = removeFirstLastChar.replace("'","")
-        # itemToItemTopTenNameArray = itemToItemTopTenNameString.split(',')
-        print(moviesResult)
+
+        moviesResultString = str(moviesResult)
+        removeFirstLastChar = moviesResultString[1:-1]
+        itemToItemTopTenNameString = removeFirstLastChar.replace("'","")
+        itemToItemTopTenNameStringCleaned = itemToItemTopTenNameString.replace('"',"")
+
+        # print(itemToItemTopTenNameStringCleaned)
+        itemToItemTopTenNameArray = itemToItemTopTenNameStringCleaned.split(',')
         count = len(moviesResult)
-        # print(len(moviesResult))
+        print(len(itemToItemTopTenNameArray))
+
+        # # Should put inside a function to reuse it.... , no time being so just copy paste for now
+        for movieName in itemToItemTopTenNameArray:   
+            print(movieName)
+            # Remove space in the string
+            movieNameTrimmed = movieName.strip() 
+            # print(movieNameTrimmed)
+            movieId = ml.getMovieId(movieNameTrimmed)
+            # print(movieId)
+            if movieId is not None:
+                tmdbIdArray.append(ml.getTmdbId(movieId))
+                tmdbId = ml.getTmdbId(movieId)
+                # print('tmdbid: ',tmdbId)
+                
+                movieId = str(tmdbId)
+                full_url = base_url + movieId + "?api_key=" + api_key + "&language=en-US"
+                response = requests.get(full_url)
+                movieInfo = response.json()
+                moviePosterURL = ""
+                moviePosterPath = movieInfo["belongs_to_collection"]
+                if moviePosterPath is not None:
+                    moviePosterPath = movieInfo["belongs_to_collection"]["poster_path"]
+                    moviePosterURL = "https://image.tmdb.org/t/p/w400" + moviePosterPath
+                else:
+                    moviePosterPath = movieInfo["backdrop_path"]
+                    moviePosterURL = "https://image.tmdb.org/t/p/w400" + moviePosterPath
+                genresArray = []
+
+                for genre in movieInfo["genres"]:
+                    genresArray.append(genre["name"])
+
+                for movieName in itemToItemTopTenNameArray:
+                    movieNameTrim = movieName.replace('"', '')
+                    movieNameArray.append(movieNameTrim)
+
+                totalTime = str(movieInfo["runtime"]) + "mins" 
+                rating = movieInfo["vote_average"]
+                # movieNameArray.append(movieName)
+                moviePosterUrlArray.append(moviePosterURL)
+                moviesGenresArray.append(genresArray)
+                totalTimeArray.append(totalTime)
+                ratingArray.append(rating)
+
+                # totalMovieCount = len(moviePosterUrlArray)
+                print("0")
+            else:
+                print("1")
+                # moviePosterUrlArray.append("/static/images/no-image.png")
+                # movieNameArray.append(movieName)
+                # moviesGenresArray.append(["No Information"])
+                # totalTimeArray.append("None")
+                # ratingArray.append("0")
     else:
         # Search by name string 
         print("nononoon")
-          
-    return render_template('recommend_movie.html', allMoviesArray=movieLenFile.movieNameArray,moviesResult = moviesResult,count = count)
+
+    return render_template('recommend_movie.html', allMoviesArray=movieLenFile.movieNameArray,movieNameArray = movieNameArray,moviesResult = moviesResult,count = count,moviePosterUrlArray = moviePosterUrlArray,totalTimeArray = totalTimeArray,ratingArray=ratingArray,moviesGenresArray= moviesGenresArray)
+
 if __name__ == '__main__':
     ml = movieLenFile.MovieLens()
 

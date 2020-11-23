@@ -38,27 +38,31 @@ sim_options = {'name': 'pearson_baseline', 'user_based': False}
 
 
 def findSimilarItem(movieName):
-    ml = MovieLens()
-    data = ml.loadMovieLensLatestSmall()
+    movieLens = MovieLens()
+    data = movieLens.loadMovieLensLatestSmall()
     moviesArray = []
-    movieID_to_name, name_to_movieID, movieWithNameAndGenre, movieNameArray = ml.read_item_names()
+    name_to_movieID = ml.name_to_movieID
+    movieID_to_name = ml.movieID_to_name
+    
     trainSet = data.build_full_trainset()
     algo = KNNBaseline(sim_options=sim_options)
     algo.fit(trainSet)
 
-    toy_story_raw_id = name_to_movieID[movieName]
-    toy_story_inner_id = algo.trainset.to_inner_iid(toy_story_raw_id)
+    movie_raw_id = name_to_movieID[movieName]
+    movie_inner_id = algo.trainset.to_inner_iid(movie_raw_id)
 
     # Retrieve inner ids of the nearest neighbors of Toy Story.
-    toy_story_neighbors = algo.get_neighbors(toy_story_inner_id, k=10)
+    movie_neighbors = algo.get_neighbors(movie_inner_id, k=10)
 
     # Convert inner ids of the neighbors into names.
-    toy_story_neighbors = (algo.trainset.to_raw_iid(inner_id)
-                        for inner_id in toy_story_neighbors)
-    toy_story_neighbors = (movieID_to_name[rid]
-                        for rid in toy_story_neighbors)
+    movie_neighbors = (algo.trainset.to_raw_iid(inner_id)
+                        for inner_id in movie_neighbors)
+    movie_neighbors = (movieID_to_name[rid]
+                        for rid in movie_neighbors)
 
-    for movie in toy_story_neighbors:
+    # print(movie_neighbors)
+    for movie in movie_neighbors:
+        # print(movie)
         moviesArray.append(movie)
     
     return moviesArray
