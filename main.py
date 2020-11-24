@@ -277,11 +277,11 @@ def findimilarityMovie():
                 print("0")
             else:
                 print("1")
-                # moviePosterUrlArray.append("/static/images/no-image.png")
-                # movieNameArray.append(movieName)
-                # moviesGenresArray.append(["No Information"])
-                # totalTimeArray.append("None")
-                # ratingArray.append("0")
+                moviePosterUrlArray.append("/static/images/no-image.png")
+                movieNameArray.append(movieName)
+                moviesGenresArray.append(["No Information"])
+                totalTimeArray.append("None")
+                ratingArray.append("0")
     else:
         # Search by name string 
         print("nononoon")
